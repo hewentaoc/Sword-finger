@@ -1,0 +1,900 @@
+<!--    
+     1. h5的新特性
+        首先html5为了更好的实践web语义化，增加了header，footer，nav,aside,section等语义化标签，
+        在表单方面，为了增强表单，为input增加了color，email,data ,range等类型，
+        在存储方面，提供了sessionStorage，localStorage,和离线存储，
+        通过这些存储方式方便数据在客户端的存储和获取，在多媒体方面规定了音频和视频元素audio和vedio，
+        另外还有地理定位，canvas画布，拖放，多线程编程的web worker和websocket协议
+
+     2. 算法 快速排序
+     3. http协议是超文本传输协议
+        https协议是由http和ssl协议构建的可进行加密传输和身份认证的网络协议，
+        常用的http的版本为http1.1 
+        HTTP/1.* 一次请求-响应，建立一个连接，用完关闭；每一个请求都要建立一个连接；
+                                                       
+        HTTP/1.1 Pipeling解决方式为，若干个请求排队串行化单线程处理，后面的请求等待前面请求的返回才能获得执行机会，一旦有某请求超时等，后续请求只能被阻塞，毫无办法，也就是人们常说的线头阻塞；
+                                                
+        HTTP/2多个请求可同时在一个连接上并行执行。某个请求任务耗时严重，不会影响到其它连接的正常执行；具体如图：
+
+
+        服务器端生成一个秘钥(S.pub,S.pri)，S.pub传递给CA机构
+        CA机构会生成自己的秘钥(C.pub,C.pri)，c.pri会对S.pub签名生成一个证书
+        CA机构会将C.pub内置到浏览器中
+        在进行http请求的时候
+        Server会将证书(S.pub)传递给Client
+        Client通过内置的根证书验证证书的合法性
+        Client通过C.pub来解密出对应的S.pub
+        Client会生成随机的对称秘钥，通过S.pub进行加密
+        Server会通过S.pri进行解密
+        双方通过Client生成的随机秘钥进行通信
+        
+
+
+        HTTP/1.* 一次请求-响应，建立一个连接，用完关闭；每一个请求都要建立一个连接；
+        HTTP/2多个请求可同时在一个连接上并行执行。某个请求任务耗时严重，不会影响到其它连接的正常执行；
+        
+        http2.0版本
+        提高访问速度
+        提高了同一域名下请求的数量
+        服务端可以主动传输数据给客户端
+
+
+ 
+     4. TCP和UDP的区别
+     TCP需要建立连接才能传输数据
+     UDP不需要建立连接就可以传输数据
+
+     TCP传输的数据稳定可靠,不会丢失
+     UPD传输的数据是尽最多努力交付,不能保证数据一定传输到
+
+     TCP协议只能1多1传输
+     UDP协议可以进行1对1,1对多传输
+
+     5. webSocket
+        支持持久连续的数据传输 可以用来做聊天室
+        保持数据的随时更新
+        
+        相当于在前端和后端之间建立一个链接。
+        前端可以主动给后端发消息,后端也可以主动给前端发送消息。
+         
+        优点:服务器端的压力不大
+        缺点:如果用户关闭浏览器,服务器端不能第一时间感知。  
+            配套系统: 心跳系统.(每隔一小段时间,检查一下各个连接,看看有没有断)
+
+        (1) 轮训 每隔一段时间,发送一次数据请求
+        (2) 长连接
+            客户端发出请求,服务端接收到请求。但是服务端不直接返回,把这个请求扣住。
+            当有新的信息来的时候,进行返回
+
+    6. html5
+       drag api
+
+    7. cookie 和 localStorage的区别
+       
+       cookie每次请求的时候都会被传递给后台
+       localStorage存储在浏览器的本地不会传递给后台
+
+       cookie存储容量小,只有4k左右
+       localStorage 可以存储5M或更大
+
+       document.cookie = 'name=hwt;expires="+data+"';
+
+       document.cookie = "login=true;expires="+odate+"";
+     
+              localStorage.setItem('name','wthe');
+              localStorage.getItem("name");
+              localStorage.removeItem("name");
+
+    8. HTML5语义化标签是:结构良好，便于阅读
+       有利于SEO: 和搜索引擎建立良好沟通,让浏览器的爬虫和机器很好地解析
+       便于团队的开发和维护
+
+    9. Doctype作用?严格模式与混杂模式如何区分？它们有何意义?
+
+       位于文档的最前面,声明浏览器以何种方式来渲染页面
+       有<!DOCTYPE html> 说明为严格模式
+       以该浏览器支持的最高标准运行
+
+       混杂模式
+       向老版本兼容
+       
+    10. Cookie如何防范XSS攻击
+        HttpOnly属性的cookie变量无法被js获取
+        防御的话为cookie设置httpOnly属性，对用户的输入进行检查，进行特殊字符过滤
+
+
+    11. 移动端布局
+        
+        (1) 媒体查询布局
+            @media screen and (max-width: 960px){
+                body{
+                background-color:#FF6699
+                }
+            }
+
+        (2) 百分比布局
+
+
+        (3) 视口 像素  逻辑像素 css、像素
+
+            参照大数据实验 进行相应比例的缩放
+
+        (4) rem
+            相对于浏览器的根元素（HTML元素）的font-size
+            
+            通过媒体查询来进行font-size值的改变
+            从而实现适配
+
+        (5) vw
+            vw	相对于视窗的宽度，视窗宽度是100vw
+            vh	相对于视窗的高度，视窗高度是100vh
+            vmin	vw和vh中的较小值
+            vmax	vw和vh中的较大值
+
+    12. 前端优化
+
+        降低请求量：合并资源，减少HTTP 请求数，minify / gzip 压缩，webP，lazyLoad。
+        加快请求速度：预解析DNS，减少域名数，并行加载，CDN 分发。
+        缓存：HTTP 协议缓存请求，离线缓存 manifest，离线数据缓存localStorage。
+        渲染：JS/CSS优化，加载顺序，服务端渲染，pipeline。
+        减少HTTP请求
+        使用内容发布网络（CDN）
+        添加本地缓存
+        压缩资源文件
+        将CSS样式表放在顶部，把javascript放在底部（浏览器的运行机制决定）
+        避免使用CSS表达式
+        减少页面加载时间
+        
+        使用外部javascript和CSS
+        避免重定向
+        图片lazyLoad
+
+        图片懒加载的方法 "loading" in HTMLImageElement.prototype
+        <img src='' loading='lazy'>  开启懒加载
+
+    13. get 和 post 请求   
+        get参数通过url传递，post放在request body中。
+        get请求在url中传递的参数是有长度限制的，而post没有。
+        get比post更不安全，因为参数直接暴露在url中，所以不能用来传递敏感信息。
+        get传递数据在url上会有长度上的限制[浏览器url地址的长度的限制]
+        post可以传输很多数据[为了服务器的安全也会有长度的限制 content-length]
+
+
+        get请求只能进行url编码，而post支持多种编码方式
+
+        get请求会浏览器主动cache，而post支持多种编码方式。
+
+        get请求参数会被完整保留在浏览历史记录里，而post中的参数不会被保留。
+
+        GET和POST本质上就是TCP链接，并无差别。但是由于HTTP的规定和浏览器/服务器的限制，导致他们在应用过程中体现出一些不同。
+
+    14. 在地址栏里输入一个URL,到这个页面呈现出来，中间会发生什么？
+
+        首先通过找到url对应的ip地址，通过查询DNS服务器得到服务器的ip地址,
+        通过http协议 传输请求报文,经过tcp协议经过三次握手建立连接
+        发送请求报文 数据传送完成后 tcp协议四次挥手断开连接
+        资源返回给浏览器 进行页面的渲染
+        Dom tree  css tree
+        render Tree (排除非视觉节点) 
+        进行页面的渲染
+
+    15.  继承的几种实现方式 
+        (1) 原型链继承  Son.prototype = father
+        (2) 通过构造函数继承 call、apply继承  (bind 返回的是一个函数)
+        (3) 共享原型的继承方式   Son.prototype = Father.prototype
+        (4) 圣杯模式的继承       F = Father.prototype;
+                                Son.prototype = new F();
+
+        (5) __proto__进行继承   Son.prototype.__proto__ = Father.prototype;
+        (6) Es6中实现继承的方式 
+            Object.setPrototypeOf(Son.prototype,Father.prototype)
+
+    16. 如何解决异步回调地狱
+        promise、generator、async/await
+
+        promise
+        生成器
+        async/await
+
+
+    17.  防抖  节流
+
+         防抖:在百度搜索东西，在打字过程中就进行数据请求
+              但是这不是我想要的结果
+              就可以利用防抖的思想
+              在input触发事件一秒内没触发的时候 , 再进行数据请求         
+              每次触发input事件就会清除上一次事件
+
+        节流函数，只允许一个函数在 X 毫秒内执行一次。
+        节流函数于防抖函数多了个限制条件，在多少毫秒内只能执行一次
+             function click(wait){
+             let demo = 0;
+
+            return  function(){
+                let now = Date.now();
+                console.log(Date.now())
+                if(now - demo > wait){
+                    console.log('a');
+                    demo = now;
+                }
+            }   
+        }
+
+        document.onclick = click(1000);
+
+    18. JS中的垃圾回收机制
+
+        JavaScript的解释器可以检测到何时程序不再使用一个对象了，
+        当他确定了一个对象是无用的时候，他就知道不再需要这个对象，可以把它所占用的内存释放掉了
+
+    19. 前端模块化
+    Commonjs：开始于服务器端的模块化，同步定义的模块化，
+              每个模块都是一个单独的作用域，模块输出，
+              module.exports，
+              模块加载require()引入模块。
+
+    AMD：中文名异步模块定义的意思。
+
+    Commonjs 和 AMD Es6的区别
+    Commonjs 用的是
+    Es6中 导入前的数发生变化,导入后的数也会发生变化
+
+    (1) Es6
+    当导出得是一个数值的时候,我们对这个数值就行操作，这个数值是可以同步出来的
+
+    (2) Commonjs
+    当导出得是一个数值的时候,我们对这个数值进行操作，这个数值是不同步的
+    但是如果导出的是一个对象的话,那么我们导出的是这个对象的地址
+    所以我们对这个对象内的属性进行操作时,是可以传递出来的
+
+
+    20. 深度克隆
+    (1) 原始方式
+        
+        function deepClone(target,origin){
+
+            var tostr = Object.prototype.toString;
+            var arr = '[object Array]';
+            var obj = '[object Object]';
+
+            for(var prop in origin){
+                if(origin.hasOwnProperty(prop)){
+                    if(origin[prop] != undefined && typeof origin[prop] == 'object'){
+                        if(tostr.call(origin[prop]) == arr){
+                             target[prop] = [];
+                        }else{
+                             target[prop] = {};
+                        }
+                        deepClone(target[prop],origin[prop])
+                    }else{
+                        target[prop] = origin[prop];
+                    }
+                }
+            }
+        }
+    
+    (2) JSON.stringify() 将对象转为    字符串
+        JSON.parse()     将字符串转为  新的对象
+
+
+    (3) Es6中的 ... 扩展运算符
+        只试用于层数比较少的克隆
+
+    (4) $.extend(true,obj1,obj2) 
+
+
+    21. 原始值  引用值
+        number string boolean null undefined object symbol
+
+        基本数据类型
+        number , string , boolean , undefined , null ,symbol
+
+      var obj = {
+        0:'hwt',
+        1:'age',
+        2: 175,
+        length:3,
+        [Symbol.iterator]:function(){
+            var curIndex = 0;
+            let next = ()=>{
+                return {
+                    value:this[curIndex],
+                    done:this.length == ++curIndex,
+                }
+            }
+            return {
+                next:next,
+            }
+        }
+    }
+
+    22. 监听属性值的变化
+        
+        Es5    Object.defineProperty(obj,'name',{
+                set(){
+
+                },
+                get(){
+
+                },
+                enumerable,
+                configurable,
+        })
+
+        Es6    var newObj = new Proxy(obj,{
+                    set:function(target,key,value,proxyObj){
+                            Reflect.set(target,key,value)    
+                 },
+                    get:function(target,key,proxyObj){
+                        return Reflect.get(target,key);
+                 },
+        })
+
+    23. Object.is(NaN,NaN) 可以比较自身
+
+    24.大多数电脑显示器的刷新频率是60Hz，大概相当于每秒钟重绘60次
+       requestAnimationFrame()
+
+   （1）requestAnimationFrame会把每一帧中的所有DOM操作集中起来，
+        在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率。
+
+   （2）在隐藏或不可见的元素中，requestAnimationFrame将不会进行重绘或回流，
+       这当然就意味着更少的CPU、GPU和内存使用量
+
+   （3）requestAnimationFrame是由浏览器专门为动画提供的API，
+       在运行时浏览器会自动优化方法的调用，并且如果页面不是激活状态下的话，
+       动画会自动暂停，有效节省了CPU开销。
+
+
+    24. arguments.callee 代表自身的函数
+
+
+    25. generate、 async  await 、promise
+
+    26. 箭头函数的this
+        内部arguments this 
+        由定义时外围最接近一层的非箭头函数的arguments和this决定其值;
+
+    27. reduce 执行完会返回一个值 第一个参数：function  ,第二个参数 ，initialValue 初始化值
+        两个参数都是 必填
+
+        function 中 有四个值， prevValue(之前的值) curValue(当前的值) index self
+            function transCookie(str){
+               var newStr =  str.split('; ') ;
+               var obj = {};              
+               newStr.reduce(function(prevValue,curValue,index,self){
+                    var _arr= curValue.split('=');
+                    prevValue[_arr[0]]=_arr[1] ;
+                    return prevValue;
+               },obj);
+             return obj;
+        }
+
+    27. 数组去重
+        indexOf循环去重
+        ES6 Set去重；Array.from(new Set(array))
+        Map原理
+
+    28. JS实现跨域
+        
+        (1) Jsonp 动态创建script标签
+        script.src = './index.js?cb=demo';告诉后端回调函数的名字
+
+        (2) 服务器代理中转的方式
+
+        (3) iframe
+            跨域: 子窗口得到父窗口的数据可以通过loacation.hash进行数据的传递
+            
+            父窗口得到子窗口的数据
+                  引入一个和父窗口同源的页面,在子窗口将数据存储在window.name上之后
+                  iframe.src 在引入此时同源的窗口,就可以得到传递的数据了
+                  iframe.contentWindow.name
+
+        (4) domain
+
+        (5) CORS  ---》cross-origin resource sharing  跨域资源共享
+                        后端来设置一个响应头  access-control-allow-origin: 'http://www.duyiedu.com'
+                        浏览器先发出请求到服务器  返回的过程中 判断是否是同源的   
+                        如果不是同源的会去看响应报文的响应头是否有 access-control-allow-origin: * / 当前页面的域名
+                        w3c标准里面提出的
+
+    29. vue的生命周期
+
+
+
+
+
+    30. e.preventDefault()   returnValue = false; 阻止默认事件  
+
+        e.stopPropagation()  cancelBubble = true; 取消冒泡事件
+
+        e.target ||    e.srcElement  事件源对象的兼容性
+
+        charCodeAt();  字符串转为utf-8编码
+        String.fromCharCode(65)  utf-8编码转为字符串
+
+        decodeURI(location.href)
+
+    31. 柯里化 扁平化
+        var arr = [[1,2,3],[4],[[[[[1,3,6]]]]],'sx',[[['xx']]],{a:'b',b:'v'},];
+        数组扁平化
+
+    32. 回流就是重构
+        重绘
+
+    33. http 状态码
+
+        200  请求成功
+        301  永久重定向
+
+             从搜索引擎优化角度出发，301重定向是网址重定向最为可行的一种办法。
+             当网站的域名发生变更后，搜索引擎只对新网址进行索引，
+             同时又会把旧地址下原有的外部链接如数转移到新地址下，
+             从而不会让网站的排名因为网址变更而收到丝毫影响。
+             同样，在使用301永久性重定向命令让多个域名指向网站主域时，
+             亦不会对网站的排名产生任何负面影响。
+
+        302  临时重定向
+        304  取本地缓存
+        403  拒绝请求
+        404  NotFound
+        500  服务器内部错误
+        503  系统维护
+
+    34. http缓存机制
+
+        强缓存
+        强缓存是利用http的返回头中的Expires或者Cache-Control两个字段来控制的，用来表示资源的缓存时间。
+
+        cache-control  和 expires
+        
+        cache-control参数
+            max-age
+            no-cache
+            no-store
+
+
+        协商缓存
+        Last-Modify/If-Modify-Since
+        Last-modify是一个时间标识该资源的最后修改时间
+
+
+        ETag/If-None-Match
+
+        Last-Modified与ETag是可以一起使用的，服务器会优先验证ETag，
+        一致的情况下，才会继续比对Last-Modified，最后才决定是否返回304。
+
+    35. 垂直居中
+        
+        (1) position:absolute; left:50%; margin-left:-50px;
+
+        (2) position:absolute; left:0; right:0; bottom:0; top:0; margin:auto;
+
+        (3) position:absolute; transform:translate(-50%,-50%);
+
+        (4) display:flex; justify-content: center;
+                          align-items: center;
+
+
+        (5) left:calc(50% - 50px); top:calc(50% - 50px)
+
+        (6) Object.prototype.__proto__
+            原型链的顶层
+
+    36. 闭包的作用
+
+        (1)实现公有变量
+        (2)可以做缓存
+        (3)可以实现封装，属性私有化
+        (4)模块化开发，防止污染全局变量
+
+    37. Es6中的结构赋值
+    
+       注:如果声明的变量名和对象的属性是相同的
+       就可以使用的解构的方式
+       把与变量名相同的对象属性对应的属性值赋给变量
+        var obj = {
+            name:'hwt',
+            age:23,
+        }
+        var {a,b} = obj;
+
+        let {name,age} = obj;
+
+
+    38. 千分位加
+
+
+
+    39. css选择器 
+        id选择器        class选择器  标签选择器
+        伪类选择器      伪元素选择器  属性选择器
+        派生选择器      并列选择器
+        通配符选择器    兄弟选择器
+         
+    常见的行级元素:span,a,strong,em,del,i
+    常见的块级元素:div,ul,li,ol,p,form,header,footer(H5中新增的语义化标签都是块级元素)
+	             （h1,h6都是块级元素）
+    常见的行级块元素:img、input,
+
+    40. position:static;  默认值
+        position:relative;相对于自己位置进行定位
+        position:absolute;相对于relative进行定位
+        position:fixed;   相对于文档进行定位
+
+    41. 圣杯模式布局
+            
+    <header>头部</header>
+    <section>
+        <div class='left'>左</div>
+        <div class='center'>中</div>
+        <div class='right'>右</div>
+    </section>
+    <footer>底部</footer>
+
+
+   42. background-origin:默认值是padding-box
+        背景色会覆盖border吗
+
+       背景色默认是从padding-box进行渲染
+       不设置backgorund-repeat:no-repeat;
+       就会覆盖border
+
+       设置了no-repeat，把backgorund-origin:border-box;
+       也会覆盖border
+
+    43. 实现线性渐变的圆
+       div{
+            width: 100px;
+            height: 100px;
+            border-radius: 50px;
+            background-image: linear-gradient(0deg,red,rgb(98, 0, 128))
+        }
+    
+    44. 清除浮动的方法
+        
+    ::after{
+        content:"";
+        clear:both;
+    }
+
+    overflow:hidden;
+
+   .clearfloat:after{display:block;clear:both;content:"";visibility:hidden;height:0}
+   .clearfloat{zoom:1}
+
+   主要给父级设置 height
+
+
+   45 触发bfc条件
+      overflow:hidden;      auto , scroll
+      display:inline-block; flex , inline-flex
+      float:left;           
+      position:absolute;    fixed
+
+
+   46 原型是function 对象的一个属性，它定义了构造函数制造出对象的共同祖先。
+
+
+   47 对MVVM的了解
+    MVC 即 Model-View-Controller 的缩写，
+        就是 模型—视图—控制器，也就是说一个标准的Web 应用程式是由这三部分组成的：
+    　   View ：用来把数据以某种方式呈现给用户
+    　　 Model ：其实就是数据
+    　　 Controller ：接收并处理来自用户的请求，并将 Model 返回给用户
+    
+    MVVM
+        核心是提供对View 和 ViewModel 的双向数据绑定，
+        这使得ViewModel 的状态改变可以自动传递给 View，即所谓的数据双向绑定。
+
+
+
+   48  Webpack的打包流程
+
+      (1) $ npm init  项目初始化  生成package.json  记录下载工具
+          $ npm install webpack  --save-dev
+          
+      (2) 配置Webpack.config.js文件
+
+          入口文件的配置
+           entry: {
+              index : './src/js/page/index.js'
+            },
+          
+          出口文件的配置
+           output: {
+                path: 'dist/js/page',
+                filename: '[name].js'
+           },
+           
+           module:{
+               //加载器配置
+               loaders:[
+                  
+               ]
+           }
+
+    49. 判断是数组的方法
+
+        Object.prototype.toString.call();
+        instanceof
+        Array.isArray
+        constructor
+
+        类数组转化为数组
+        [..arg]
+        Array.from()
+        [].slice.call()
+    
+    50. event.target指向引起触发事件的元素，而event.currentTarget则是事件绑定的元素，
+
+
+    51.css动画属性和旋转使用方法，如果让你实现一个旋转动态的正方体你如何实现
+        响应式瀑布流你如何做到的？
+        图片都是绝对定位你是如何动态设置他们的left和top的，可以说一下逻辑吗
+
+
+
+    52. display有哪些属性
+        none
+        inline-block
+        block
+        inline
+        list-item        此元素会作为列表显示。
+        table            此元素会作为块级表格来显示
+        inherit          规定应该从父元素继承 display 属性
+
+    53
+    通过 OPTIONS 方法，可以询问服务器具体支持哪些方法，
+    或者服务器会使用什么样的方法来处理一些特殊资源。可以说这是一个探测性的方法，
+    客户端通过该方法可以在不访问服务器上实际资源的情况下就知道处理该资源的最优方式。
+
+    router.options('/upload', function* (){
+        this.set('Access-Control-Allow-Method', 'POST');
+        this.set('Access-Control-Allow-Origin', 'http://xxx.com');
+        this.status = 204;
+    });
+
+    55. 单例模式是什么
+        保证一个类仅有一个实例，并提供一个访问它的全局访问点。
+
+        function singleModel () {
+            var returnObj = null;
+            return function (name , age) {
+                if(returnObj) {
+                    return returnObj;
+                }
+                this.name = name;
+                this.age = age;
+                returnObj = this;
+          }
+        }
+        var Single = singleModel();
+        let a = new Single ('hwt',22);
+        let b = new Single ();
+
+    56 手写bind函数
+        function demo1 (age) {
+            console.log(age);
+            console.log(this.name);
+        }
+
+        var obj = {
+            name:"hwt"
+        }
+
+
+        Function.prototype.myBind = function (point) {
+            var func = this;
+            var _arg = [].slice.call(arguments , 1);
+            return function () {
+                func.apply( point , _arg);
+            }
+        }
+
+        demo1.myBind(obj,22)();
+
+57、vue双向绑定实现原理，Object.defineProperty()有哪些属性，有什么局限，如何改进？
+    value:"" , configurable , enumberable , 
+    写的属性具有 writable    可写性,可读性
+    可配置性   configurable  通过delete可以删除obj.name,说明其的可配置性
+    可枚举性   enumerable   通过 for in可以循环遍历对象,说明其得可枚举性
+(1) Object.defineProperty
+    只能检测到原始值的变化
+    如果属性值是引用值(对象),就检测不到变化
+    就需要类似于克隆,进行深层次递归 
+(2) Object.defineProperty()只能检测对象,对于数组不能进行监控
+
+(3) Object.seal(obj) 不允许新添加属性
+
+     let obj = {
+         name:"hwt",
+         arr:[1,2,3],
+         hobby:{
+             love:"nihao",
+         }
+     }
+
+     function defineData (obj) {
+         for(let prop in obj) {
+            if(obj[prop] instanceof Array) {
+                proxyArr(obj[prop]);
+            }else{
+                proxyObj(obj , prop ,  obj[prop]);
+            }
+         }
+     }
+
+     function proxyArr(arr) { 
+            let obj = {
+                push:function () {
+
+                },
+                pop: function () {
+
+                },
+            }
+            proxyArrFunc(obj , 'push');
+            arr.__proto__ = obj;
+      }
+      function proxyArrFunc (newObj , type ) {
+         Object.defineProperty(newObj , type , {
+             value:function (...arg) {
+                let len = Array.prototype[type].apply(this,arg);
+                console.log(this);
+                return len;
+             }
+         })
+      }
+
+    //用一个新对象对原对象进行代理可以避免出现死循环
+    //不然一直监控到obj的变化就会出现死循环
+      let newObj = {};
+      function proxyObj (obj ,prop ,data) {
+        Object.defineProperty(newObj ,prop ,{
+            set (value) {
+                console.log('我要换');
+                obj[prop] = value;
+            },
+            get () {
+                console.log('我要得到')
+                return obj[prop];
+            },
+            configurable:true,
+            enumerable:true,
+        })
+        if(typeof data == 'object') {
+             defineData(data);
+        }
+      }
+
+      defineData (obj);
+
+
+58. 给没有被部署iterator函数的数据添加迭代接口
+
+    实现iterator函数有自己的规则
+    Iterator实现规则：
+        1.有一个返回值:并且返回值是一个对象
+        2.对象中必须有一个next方法
+        next、value、done
+        
+   var myObj = {
+        0 : 'success',
+        1 : 'hwt',
+        2 : 'age',
+        length : 3, 
+        [Symbol.iterator]:function () {
+            var curIndex = 0;
+            let next = ()=> {
+                return {
+                    value: this[curIndex],
+                    done: this.length  == curIndex++,
+                }
+            }
+            return {
+                next:next,
+            }
+        }
+    }
+
+    for(var prop of myObj) {
+        console.log(prop)
+    }
+
+59、Generator生成器
+
+    function * read(){
+        // 进行异步操作就会把返回结果传给val1
+        // val1就可以通过调用next()操作传给下一次异步操作
+        // 通过第三方的函数遍历操作
+
+        var val1 = yield readFile('./data/number.txt');//next(name);
+        var val2 = yield readFile(val1);// next(score)
+        var val3 = yield readFile(val2);// 
+        return val3;
+    }
+
+    function co(oIerator){
+            return new Promise(function(res,rej){
+                let next = (data)=>{
+                    let {value,done} = oIerator.next(data);
+                    console.log(value,done)
+                    // 当值为val3的时候  相当于return yield val3;
+                    // return {value:val3,done:true}
+                    if(done){
+                        res(value);
+                    }else{
+                        value.then(function(data){
+                            next(data);
+                            //next(name);
+                            //next(score); 
+                            //next(99) 把99传给val3
+                        })
+                    }
+                }
+                next();
+            })
+        }
+
+60、async + await 解决异步操作
+
+    已经用语法糖 promise处理好底层
+    当readFile()返回一个Promise对象 会触发readFile异步操作
+    当返回成功数据的时候 会执行Promise中的reslove()函数，从而触发成功的函数
+    然后调用then方法就会得到此时的数据
+    然后把数据传给val1 
+    await 就是使用Generaotr Promise co函数的底层原理实现的
+    变异步为同步
+
+    async function demo () {
+        let val1 = await new Promise(function (res,rej) {
+                res();
+        }).then(function () {
+            return 'xx'
+        })
+        console.log(val1);
+    }
+
+
+
+
+
+            
+
+
+
+        
+
+
+
+
+     
+
+
+ -->
+    <!DOCTYPE html>
+    <html>
+     
+    <head>
+      <meta charset="utf-8">
+      <script src="http://lib.sinaapp.com/js/jquery/2.0.2/jquery-2.0.2.min.js"></script>
+    </head>
+    <style>
+         div{
+             width: 0;
+             height: 0;
+             border: 100px solid red;
+             border-left-color: transparent;
+             border-top-color: transparent;
+             border-bottom-color: transparent;
+             transform: rotate(90deg);
+         }
+    </style>
+     
+    <body>
+      <div id="header">#header</div>
+    
+    </body>
+     
+    </html>

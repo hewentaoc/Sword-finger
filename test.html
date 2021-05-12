@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .wrapper {
+            padding: 10px;
+            background-color: black;
+        }
+        div.demo{
+             position: relative;
+             left: -10px;
+             width: 100px;
+             height: 100px;
+             background-color: red;
+        }
+    
+    </style>
+</head>
+
+<body>
+  
+     <div class="wrapper">
+        <div class="demo">
+        
+        </div>
+     </div>
+    <script>
+
+        // function demo(a,b){
+        //     console.log(a);
+        //     var a = 456;
+        //     function a(){
+
+        //     }
+        //     console.log(b,'b');
+        //     var b = function(){
+
+        //     }
+        //     console.log(b,'b');
+        //     console.log(a);
+        // }
+
+        // demo(1,2);
+
+
+        // function *test(){
+
+        // }
+        // var ot = test();
+    
+       
+
+    var obj = {
+        0:'hwt',
+        1:'age',
+        2: 175,
+        length:3,
+        [Symbol.iterator]:function(){
+            var curIndex = 0;
+            let next = ()=>{
+                return {
+                    value:this[curIndex],
+                    done:this.length == ++curIndex,
+                }
+            }
+            return {
+                next:next,
+            }
+        }
+    }
+    for (const iterator of obj) {
+        console.log(iterator)
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // 第一行三个数n,m,t
+
+        // 接下来n行m列个字符，代表这个平面。其中，'.'代表可以走的格子，'*'代表障碍。
+
+        // 接下来四个数r1,c1,r2,c2。
+
+        // 1≤ n , m ≤100   ； t≤15
+        // let arr = [];
+        // for (var i = 0; i < n.length; i++) {
+        //     var point = readLine().split('');
+        //     arr.push(point);
+        // }
+        // var move = readLine().trim().split(' ');
+        // var start = move.slice(0, 2);
+        // var target = move.slice(2, 4);
+
+        // let restore = [];
+        // for (var i = 0; i < arr.length; i++) {
+        //     for (var j = 0; j < m; j++) {
+        //         if (arr[i][j] == "*") {
+        //             restore.push([i, j]);
+        //         }
+        //     }
+        // }
+        // let index = 0;
+
+        // function test(start, target, t) {
+        //     for (var i = 0; i < t; i++) {
+
+        //         if (Math.random() - 0.5 > 0) {
+        //             Math.random() - 0.5 > 0 ? start[0]++ : start[0]--;
+        //         } else {
+        //             Math.random() - 0.5 > 0 ? start[1]++ : start[1]--;
+        //         }
+        //         test(start, target, t - 1);
+        //         if (start[0] == target[0] && target[1] == start[1]) {
+        //             index++;
+        //             return;
+        //         }
+        //     }
+        //     return index;
+        // }
+
+
+        // let target = [2, 0];
+        // let start = [0, 0]
+        // let pre = [
+        //     [1, 0],
+        //     [1, 1],
+        //     [1, -1]
+        // ];
+        // let step = 0;
+        // while (target[0] != start[0] && target[1] != start[1]) {
+        //     if (target[0] > start[0]) {
+        //          start[0] += start[0] + 1;
+        //         if (prev (start)) {
+                  
+        //         } else {
+        //             start[0] += start[0] - 1;
+        //             start[1] += start[1] + 1;
+        //         }
+
+        //     } else if(target[0] < start[0]) {
+
+        //         start[0] += start[0] - 1;
+        //         if (prev(start)) {
+                    
+        //         } else {
+        //             start[0] += start[0] + 1;
+        //             start[1] += start[1] - 1;
+        //         }
+        //     }
+
+        //     if(target[1] > start[1]){
+                
+        //     }
+
+        // }
+
+        // function prev(start) {
+        //     pre.forEach(function (ele) {
+        //         if (ele[0] == start[0] && ele[1] == start[1]) {
+        //             return false;
+        //         }
+        //     })
+        // }
+
+
+function * test(){
+    var val1 = yield 'a';
+    console.log(val1,'val1');
+    var val2 = yield 'b';
+    console.log(val2);
+    var val3 = yield 'c';
+    console.log(val3);
+    return 'd';
+}
+// var ot = test();
+// console.log(ot.next());
+// console.log(ot.next('xxxx'));
+// console.log(ot.next('yyyy'));
+// console.log(ot.next('zzzz'));
+
+
+
+
+
+        var str1 = 'abcdcef';
+        var str2 = 'bcdacd';
+
+        function findStr(str1, str2) {
+            if (str1.length == 0 || str2.length == 0) {
+                return '';
+            }
+
+            if (str1.length > str2.length) {
+                var temp = str1;
+                str1 = str2;
+                str2 = temp;
+            }
+            var len1 = str1.length;//短
+            var len2 = str2.length;//长
+
+            for (var j = len1; j >= 0; j--) {//'bcdacd'
+                for (var i = 0; i <= len1 - j; i++) {//'abcdcef'
+                    console.log(i,j)
+                    var curStr = str1.substr(i, j);//substr是从第i位截取的长度为j , substr(start,length)
+                    console.log(curStr)
+                    if (str2.indexOf(curStr) != -1) {
+                        return curStr;
+                    }
+                }
+            }
+        }
+        findStr(str1, str2);
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // var arr =  [4, 4,2, 7, 6];
+        // function test(arr){
+        //     var sum = 0;
+        //     arr.sort(function(a,b){
+        //        return a - b; 
+        //     })
+        //     console.log(arr);
+        //     for(var i = arr.length -1 ;i > 0 ; i-- ){
+        //         sum =sum + Math.abs(arr[i] - arr[i-1]);
+        //     }
+        //     console.log(sum);
+        // }
+        // test(arr);
+
+        // function demo(arr){
+        //     arr = [...new Set(arr)];
+        //     var index = 0;
+        //     var len = arr.length;
+        //     var temp;
+        //     for(var i =1; i<len;i++){
+        //         temp = arr[i];
+        //         var j = i-1;
+        //         while(j>=0&&arr[j]>temp){
+        //             arr[j+1] = arr[j];
+        //             arr[j] = temp;
+        //             j--;
+        //             index++;
+        //         }
+        //         arr[j+1] = temp;
+        //         if(i == len - 1){
+        //             return index;
+        //         }
+        //     }
+
+        // }
+        // demo(arr)
+
+        // 0 0 2 4
+        // 0 2 2 2
+        // 0 4 2 2
+        // 8 8 2 2
+        //    图a
+        // 2 4 0 0
+        // 4 2 0 0
+        // 4 4 0 0
+        // 16 4 0 0
+
+        // 2048
+        //    function demo(arr){
+        //         var newArr = [];
+        //         for(var i= 0 ;i < 4 ; i++){ 
+        //             newArr[i] = [...([].slice.call(arr,i,i+4))]
+        //         }
+
+        //         for(var i = 0 ;i<4;i++){
+        //             for(var j = 1;j<4 ; j++){
+        //                 if(newArr[i][j] == 0 && i<=1){
+        //                     newArr[i][j] == newArr[i+2][j];
+        //                 }
+        //             }
+        //         }
+        //    }
+        // var str1 = read_line().trim();
+        //    demo(arr);
+
+
+        var obj = {
+            name: 'hwt',
+            myobj: {
+                age: 23,
+            }
+        }
+        for (var prop in obj) {
+            //  console.log(prop);
+        }
+    </script>
+</body>
+
+</html>

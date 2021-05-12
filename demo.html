@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    
+        div {
+            border-top: 1px solid #000;
+            transform: scaleY(0.5);
+        }
+    
+    </style>
+</head>
+<body>
+    <div>
+
+    </div>
+    <script>
+    //    function myadd(a,b,c){
+    //         return a+b+c;
+    //    }
+
+    //    function nowcur(func){
+    //        var length =func.length;
+    //        var _arguments = [].slice.call(arguments,1);
+    //        return function(){
+    //             var arg = [].slice.call(arguments,0);
+    //             var newArg = arg.concat(_arguments);
+    //             var len = newArg.length;
+    //             if(len >= length){
+    //                 return func.apply(null,newArg);
+    //             }else{
+    //                 newArg.unshift(func);
+    //               return nowcur.apply(null,newArg);
+    //             }
+    //        }
+
+    //    }
+    //   var newAdd = nowcur(myadd,1);
+   
+       
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //柯里化
+
+    // function cur ( func ){
+    //     let _arg = [].slice.call(arguments,1);
+    //     // console.log(_arg)
+    //     return function (...arg) {
+    //         let newArg = arg.concat(_arg);
+    //         if(newArg.length < func.length) {
+    //             newArg.unshift(func);
+    //             return cur(...newArg);
+    //         }else {
+    //            return func(...newArg)
+    //         }
+    //     }
+    // }
+
+    // function add (a,b,c ) {
+    //     return a + b + c;
+    // }  
+
+    // // let newadd = cur(add,1);
+   
+   
+    
+    // function cur (func) {
+    //     let _argument = [].slice.call(arguments,1);
+    //     function reply (...arg) {
+    //         let newArg = arg.concat(_argument);
+    //         if(newArg.length >= func.length) {
+    //             return func.apply(null,newArg);
+    //         }else{
+    //             _argument = newArg;
+    //             return reply;
+    //         }
+    //     }
+    //     return reply;
+    // }
+    //    let newadd = cur(add);
+    
+    // let arr1  = [1,2,5];
+    // let arr2 = [2,4,6];
+    
+    // let newArr = arr1.concat(arr2);
+    // newArr.sort(function(a,b) {
+    //     return a - b;
+    // })
+    // console.log(newArr);
+
+
+        // function demo (arr) {
+        //     let toStr = Object.prototype.toString;
+        //     let type = '[object Array]';
+        //     let newArr = [];
+        //     arr.forEach(function (ele ,index ,self) {
+        //         if(toStr.call(ele) == type) {
+        //             newArr = newArr.concat(demo(ele));
+        //         }else{
+        //             newArr.push(ele);
+        //         }
+        //     })
+        //     return newArr;
+        // }
+        // demo([[1,2,3],[4]])
+
+
+// var quickSort = function(arr) {
+//     if (arr.length <= 1) {
+//         return arr;
+//     }
+//     var pivotIndex = Math.floor(arr.length / 2);
+//     var pivot = arr.splice(pivotIndex, 1)[0];
+//     console.log(arr)
+//     var left = [];
+//     var right = [];
+
+//     for (var i = 0; i < arr.length; i++) {
+//         if (arr[i] < pivot) {
+//         left.push(arr[i]);
+//         } else {
+//         right.push(arr[i]);
+//         }
+//     }
+//     return quickSort(left).concat([pivot], quickSort(right));
+// };
+
+// quickSort([4,5,6,3,5,7])
+
+
+
+    // var obj = {
+
+    // }
+
+    // Object.defineProperty(obj,'name', {
+    //     value:'2',
+    //     writable:false,
+    //     configurable:false,
+    //     enumerable:false,
+    // })
+
+
+    function * GeneratorFunc () {
+        console.log(1)
+        let val = yield 'a';
+        console.log(val)
+
+    }
+
+// var og = GeneratorFunc ();
+// console.log(og.next('x'))
+// console.log(og.next('y'))
+
+// function * test(){
+//     var val1 = yield 'a';
+//     console.log(val1,'val1');
+//     var val2 = yield 'b';
+//     console.log(val2);
+//     var val3 = yield 'c';
+//     console.log(val3);
+//     return 'd';
+// }
+// var ot = test();
+// console.log(ot.next());
+// console.log(ot.next('xxxx'));
+// console.log(ot.next('yyyy'));
+// console.log(ot.next('zzzz'));
+
+
+//   async function demo () {
+//       let val1 = await new Promise(function (res,rej) {
+//             res('sss');
+//       })
+//       console.log(val1);
+//   }
+
+
+// var str  = 'cssStyleSheet'
+// var reg = /[A-Z]/g;
+// let arr = str.match(reg);
+// for(var i = 0 ; i < arr.length ; i++) {
+//     str = str.replace(arr[i], '_'+arr[i].toLowerCase())
+// }
+// console.log(str)
+
+
+//  new Promise(function(res,rej) {
+//      res('xx')
+//  }).then(function(val){
+//     console.log(val);
+//  })
+
+
+//  let os = Symbol('s')
+
+//  let obj = {
+//      [os] :'a'
+//  }
+
+    // function demo () {
+    //     let a = function name(params) {
+            
+    //     }
+    //     a.toString;
+    //     return a.toString()
+    // }
+    // demo();
+
+    // var a = function name(params) {
+    //     return 'x'
+    // };
+    // a.toString = function(){
+    //     console.log('call a.toString');
+    //     return 'zzz';
+    // };
+    // console.log(a)
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>

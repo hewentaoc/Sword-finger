@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<!-- √ -->
+<body>
+
+    <script>
+        // 1. 二分法查数组的索引
+        // 二分法需要排好队
+        var arr = [1, 3, 4, 5, 6, 7, 8, 10, 21];
+
+        function findIndex(arr, value) {
+            if (arr.length == 0) {
+                return undefined;
+            }
+            var low = 0;
+            var hight = arr.length - 1;
+            while (low <= hight) {
+                var mid = parseInt((low + hight) / 2);
+                if (arr[mid] == value) {
+                    return mid;
+                } else if (arr[mid] > value) {
+                    hight--;
+                } else {
+                    low++;
+                }
+            }
+            return -1;
+        }
+        findIndex(arr, 5)
+
+        // 2 判断回文字符串
+        //   二分法
+        //  [a,b,c,b,a]  [a,b,c,c,b,a];
+
+        function findHui(arr) {
+            if (arr.length == 0) {
+                return undefined;
+            }
+            var low = 0;
+            var hight = arr.length - 1;
+            while (low <= hight) {
+                if (arr[low] != arr[hight]) {
+                    return false;
+                } else {
+                    low++;
+                    hight--;
+                }
+            }
+            return true;
+        }
+        findHui(['a', 'b', 'c', 'b', 'a'])
+
+        // 3.查询子串首次出现的位置,abcbcxyxyz  字串为bc  结果为1
+        var str = 'abcbcxyxyz';
+        var arr = str.split('');
+        var sArr = ['x', 'y', 'z'];
+
+        function findWhere(origin, target) {
+            if (origin.length == 0) {
+                return undefined;
+            }
+
+            for (var i = 0; i < origin.length; i++) {
+                for (var j = 0; j < target.length; j++) {
+                    if (target[j] != origin[i + j]) {
+                        break;
+                    }
+                    if (j == target.length - 1) {
+                        return i;
+                    }
+                }
+            }
+
+        }
+        findWhere(arr, sArr);
+
+        // 4. 计算数组中,最大连续增长序列的长度,[1,2,3,4,1,2,3,4,5,1,2,3] 结果为5
+        var arr = [1, 2, 3, 4, 1, 2, 3, 4, 5, 6, 1, 2, 3];
+
+        function findMaxLength(arr) {
+            if (arr.length == 0) {
+                return undefined;
+            }
+
+            var count = 1;
+            var max = 0;
+            for (var i = 0; i < arr.length; i++) {
+                if (arr[i + 1] > arr[i]) {
+                    count++;
+                } else {
+                    max = count > max ? count : max;
+                    count = 1;
+                }
+            }
+            return max;
+        }
+        findMaxLength(arr)
+
+
+        //5. 千分位分隔符
+        var str = "1000000";
+        var reg = /(?=(\B)(\d{3})+$)/g;
+        str.replace(reg, ',');
+        str.replace(reg, ',');
+
+        // 6. 手写jsonp
+
+        var script = document.createElement('script');
+        var url = './data.json';
+        var value = '';
+        script.src = url + "?data=" + value + "&callback=demo";
+
+        function demo(res) {
+
+        }
+        document.body.appendChild(script);
+        document.body.removeChild(script);
+
+        //7. filter函数
+
+        Array.prototype.myFilter = function () {
+            if (!arguments[0]) {
+                return [];
+            }
+            var len = this.length;
+            var func = arguments[0];
+            var self = arguments[1] || this;
+            var arr = [];
+            for (var i = 0; i < len; i++) {
+                func.apply(self, [this[i], i, this]) ? arr.push(this[i]) : '';
+            }
+            return arr;
+        }
+        var arr = [1, 2, 3];
+        let newArr = arr.myFilter(function (ele, index, self) {
+            return ele > 2;
+        })
+
+        // 8. 写轮播图写小球坠落运动加算法题
+
+        Person.prototype = {
+            name: 'hwt',
+            hello() {
+                console.log(this.name);
+            }
+        }
+
+        function Person() {
+
+        }
+        Student.prototype = {
+            age: '24',
+            goSchool() {
+                console.log(this.name, this.age);
+            }
+        }
+        Student.prototype.__proto__ = Person.prototype;
+
+        function Student() {
+
+        }
+
+        var str = new Student()
+        str.goSchool()
+
+        //  9. 数组去重
+
+        var arr = [4, 5, 6, 5, 1, 4, 5, 8, 5];
+
+        //去重方法1
+
+        var unique = [...new Set(arr)];
+        console.log(unique);
+
+        //去重方法2 
+
+        Array.prototype.unique = function () {
+            if (this.length == 0) {
+                return [];
+            }
+            let arr = [];
+            for (var i = 0; i < this.length; i++) {
+                if (!arr.includes(this[i])) {
+                    arr.push(this[i]);
+                }
+            }
+            return arr;
+        }
+        let newArrs = arr.unique();
+        console.log(newArrs);
+
+        //去重方法3
+
+        Array.prototype.unique2 = function () {
+            if (this.length == 0) {
+                return [];
+            }
+            var obj = {};
+            let arr = [];
+            for (var i = 0; i < this.length; i++) {
+                if (!obj[this[i]]) {
+                    obj[this[i]] = 'abc';
+                    arr.push(this[i]);
+                }
+            }
+            return arr;
+        }
+        let newArrs2 = arr.unique2();
+        console.log(newArrs2);
+
+        // 10. 两个字符串找最大公共子串
+
+        var str1 = 'abcdcef';
+        var str2 = 'bcdacd';
+
+        function findStr(str1, str2) {
+            if (str1.length == 0 || str2.length == 0) {
+                return '';
+            }
+
+            if (str1.length > str2.length) {
+                var temp = str1;
+                str1 = str2;
+                str2 = temp;
+            }
+            var len1 = str1.length;//短
+            var len2 = str2.length;//长
+
+            for (var j = len1 - 1; j >= 0; j--) {//'bcdacd'
+                for (var i = 0; i < len1 - j; i++) {//'abcdcef'
+                    var curStr = str1.substr(i, j);//substr是从第i位截取的长度为j
+                    if (str2.indexOf(curStr) != -1) {
+                        return curStr;
+                    }
+                }
+            }
+        }
+        findStr(str1, str2);
+
+        // 11. 字符串找最长连续数字子序列，输出长度
+
+        var str1 = '12317845687';
+
+        function findLen(str1) {
+            if (str.length == 0) {
+                return 0;
+            }
+            let count = 1;
+            let max = 0;
+            for (var i = 0; i < str1.length; i++) {
+                if (i == str1.length - 1) {
+                    return max;
+                }
+                if (str1[i + 1] > str1[i]) {
+                    count++;
+                } else {
+                    max = count > max ? count : max;
+                    count = 1;
+                }
+            }
+        }
+        findLen(str1);
+
+        // 12. 判断二叉树是不是镜像二叉树
+        var obj = {
+            root:{
+                value:0,
+                left:{
+                    value:1,
+                    left:{
+                        value:2,
+                    },
+                    right:{
+                        value:3,
+                    }
+                },
+                right:{
+                    value:1,
+                    left:{
+                        value:3,
+                    },
+                    right:{
+                        value:2,
+                    }
+                }
+            }
+        }
+        
+        //判断二叉树是不是镜像二叉树
+        function findTree(left,right){
+             if(left == null && right == null){
+                 return true;
+             }
+             if(left == null || right ==null ){
+                 return false;
+             }
+             if(left.value != right.value){
+                return false;
+             }
+            return  findTree(left.left,right.right) && findTree(left.right,right.left);
+        }
+        findTree(obj.root.left,obj.root.right)
+
+
+
+    //  13. mycall
+
+        Function.prototype.mycall = function(){
+            var obj = arguments[0];
+            var func = this;
+            if(obj == null || obj == undefined){
+                func();
+            }
+            obj.func();
+        }
+
+    // 14
+    function Find(target, array)
+        {
+            array.forEach(function(ele){
+                ele.forEach(function(item){
+                    if(item == target){
+                       
+                        return true;
+                    }
+                })
+            })
+            return false;
+        }
+
+        Find(7,[[1,2,8,9],[4,7,10,13]])
+
+        
+    // 15
+    var str = "10000000";
+    var reg = /(?=(\B)(\d{3})+$)/g;
+
+
+    // 16 手下bind函数
+    
+        Function.prototype.mybind = function(obj){
+             var obj = obj || window;
+             var arg = [].slice.call(arguments,1);
+             var func = this;
+             obj.func = func;
+             return function(arg){
+                    var value = eval('obj.func(arg)');
+                    delete obj.func;
+                    return value;
+             }
+        }
+
+        var obj = {
+            name:'hwt',
+        }
+
+        function demos(){
+            console.log(this.name);
+            return 'a';
+        }
+
+        let myfunc = demos.mybind(obj);
+        console.log(myfunc())
+
+    // 17.  nowcur 柯里化
+       function myadd(a,b,c){
+            return a+b+c;
+       }
+
+       function nowcur(func){
+           var length =func.length;
+           var _arguments = [].slice.call(arguments,1);
+           return function(){
+                var arg = [].slice.call(arguments,0);
+                var newArg = arg.concat(_arguments);
+                var len = newArg.length;
+                if(len >= length){
+                    return func.apply(null,newArg);
+                }else{
+                    newArg.unshift(func);
+                  return nowcur.apply(null,newArg);
+                }
+           }
+
+       }
+      var newAdd = nowcur(myadd);
+
+    //18 判断回文字符串
+    // [a,b,c,b,a]
+    var nowArr = ["a","b","c","b","a"]
+
+    function nextArr(nowArr){
+        
+        var start = 0;
+        var last  = nowArr.length - 1;
+        while(start <= last){
+            if(nowArr[start] == nowArr[last]){
+                start++;
+                last--;
+            }else{
+                return false;
+            }
+        }
+        return true;
+    }
+    nextArr(nowArr);
+
+    // 19. 手写Promise
+
+       new Promise(function(res,rej){
+
+       })
+       function Mypromise(func){
+            this.status = 'pedding';
+            var self = this;
+            this.resolveValue = '';
+            this.rejectValue = '';
+            this.resolveArr = [];
+            this.rejectArr = [];
+            function resolve(val){
+                if(self.status == 'pedding'){
+                   self.status = 'success';
+                   self.resolveValue = val;
+                }
+            }
+
+            function reject(val){
+                if(self.status == 'pedding'){
+                   self.status = 'fail';
+                }
+            }
+
+            try{
+                func(resolve,reject);
+            }catch(error){
+                reject();
+            }
+       }
+       Mypromise.prototype.then = function(onfulling,onreject){
+            if(!onfulling){
+                onfulling = function(res){
+                    return res;
+                }
+            }
+            if(!onreject){
+                onreject = function(error){
+                    throw new Errow(error);
+                }
+            }
+            var self = this;
+            let newPromise = new Promise(function(res,rej){
+                if(self.status == 'success'){
+                    setTimeout(function(){
+                        let returnVal = onfulling(self.resolveValue);
+                        res(returnVal);
+                    })
+                }
+                if(self.status == 'fail'){
+                    setTimeout(function(){
+                        let returnVal = onreject(self.rejectValue);
+                        res(returnVal);
+                    })
+                }
+                if(self.status == 'pedding'){
+                    if(onfulling){
+                        self.rejectArr.push(function(){
+                            setTimeout(function(){
+                                try {
+                                    onfulling();  
+                                } catch (error) {
+                                    rej();
+                                }
+                            })
+                        })
+                    }
+                }
+            })
+       }
+
+    //20. str 字符串剔除str2的字符
+
+       var str = 'abcd';
+       var str2 = 'bc';
+       str.replace(str2,'')
+
+    //21. 数组扁平化
+    var arrs1 = [[1,2,3],[4],[[[[[1,3,6]]]]],'sx',[[['xx']]],{a:'b',b:'v'},];
+
+    Array.prototype.dealArr = function(){
+        var str = Object.prototype.toString;
+        var oarr = '[object Array]';
+        let newArr =  [];
+        this.forEach(function(elem){
+            if(str.call(elem) == oarr){
+                newArr = newArr.concat(elem.dealArr());
+            }else{
+                newArr.push(elem);
+            }
+        })
+        return newArr;
+    }
+    console.log(arrs1.dealArr());
+    // 数组扁平化
+    // 简单方法1  这种方法会改变参数的类型
+    var arr = [1,2,3,[4,5,6,[7,8,9]]];
+    var newArr = arr.join().split(',')
+    console.log(newArr)
+
+    // 简单方法2 
+    // flat方法是新增的用来实现数组扁平化的方法
+    // 后面的参数是对几层的数组进行扁平化处理
+    // 如果不管有多少层嵌套，都要转成一维数组，可以用Infinity关键字作为参数。
+    var arr2 = arr.flat(Infinity);
+    console.log(arr2);
+
+    // 简单方法3
+    var arr3 = [[1,2,3],[4],[5,6,'x','y']];
+    console.log([].concat.apply([],arr1));
+
+    //22. ajax
+
+    function Ajax(type,data,url,cb){
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+            if(xhr.onreadyState == 4){
+                if(xhr.status == 200){
+                    cb(xhr.responseText)
+                }
+            }
+        }
+
+        if(type == 'get'){
+            xhr.open(type,url+'?'+data,true);
+            xhr.send();
+        }else{
+            xhr.open(type,url,true);
+            xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+            xhr.send(data);
+        }
+    }
+
+    // 23. 给定一个长为n数组,里面存储着n个无序的正整数
+    //     求出数组中两个相差绝对值最小的索引
+        var arr =  [1,4,5,6,7,8,41,2,6,48,31,0,4,5];  
+        var index = 0;
+        let min = null;
+        // Math.abs
+        for( var i = 0 ; i <arr.length ;i++){
+            if(i == 0){
+               min = Math.abs(arr[i] - arr[i+1]);
+               index = 0;
+            }else{
+                if(i == arr.length -1){
+                    break;
+                }else{
+                    if( Math.abs(arr[i] - arr[i+1]) < min){
+                         min = Math.abs(arr[i] - arr[i+1]);
+                         index = i;
+                    }else{
+                        continue;
+                    }
+                }
+            }
+        }
+        console.log(index);
+
+    
+    //24. 解构
+      
+    let myobj = {
+        name:"hwt",
+        age:23,
+    }
+    // let {name,age} = myobj;
+
+    let name,age;
+    ( {name,age} = myobj)
+
+
+    // 25. 手写新的call
+
+    Function.prototype.myCall = function () {
+        let context = arguments[0]
+        let arg = [].slice.call(arguments,1);
+        if(arguments[0] == null || arguments[0] == undefined){
+                context = window;
+        }
+        let os = Symbol('s');
+        context[os] = this;
+        let value = context[os](...arg);
+        delete context[os];
+        return value;
+    }
+    var name = 'he';
+    function demo(a,b,c) {
+        console.log(a+b+c);
+        console.log(this.name)
+    }
+    let obj = {
+        name:"hwt666"
+    }
+    demo.myCall(obj,1,2,3)
+
+
+    // 26. 斐波那次数列的优化
+    // 1 1 2 3 5
+    var cache = [];
+    function fib(n){        
+        if(cache[n] !== undefined){               
+            return cache[n];
+        }          
+        if(n <= 2){               
+            cache[n] = 1;
+            return 1;
+        }    
+        cache.push(fib(n - 1) + fib(n - 2));
+        return cache[n];
+    }
+    //  cache  fib(4) + fib(3)
+    //  cache  fib(3) + fib(2)
+    //  cache  fib(2) + fib(1)
+
+    // cache[,1,1,2,3,5]
+    console.log(fib(5));//5
+    console.log(cache)
+
+
+
+
+
+
+
+
+
+
+        // var isSymmetric = function (root) {
+        //     if (root == null) {
+        //         return true;
+        //     }
+        //     return isSym(root.left, root.right)
+        // };
+
+        // function isSym(left, right) {
+        //     if (left == null && right == null) {
+        //         return true;
+        //     }
+        //     if (left == null || right == null) {
+        //         return false;
+        //     }
+        //     if (left.val != right.val) {
+        //         return false;
+        //     }
+        //     return arguments.callee(left.left, right.right) && arguments.callee(left.right, right.left);
+        // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // function demo(str,n){
+        //   var arr = str.split('');
+        //   var status = null;
+        //   var step = 0;
+        //   var obj = {};
+        //   arr.forEach(function(ele,index){
+        //       if(obj[ele]){
+        //         obj[ele]++;
+        //       }else{
+        //         obj[ele] = 1; 
+        //       }
+        //   })
+        //   for(var prop in obj){
+        //       if(prop == "F"){
+        //           step = obj[prop];
+        //       }
+        //   }
+        //   if(n > obj["T"] ){
+        //       n = obj["T"];
+        //   }
+        //   step = step + n;
+        //   console.log(step);
+        // }
+
+        // demo("FFT",1);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // function demo(arr){
+        //     if(arr.length==0){
+        //         return;
+        //     }
+        //     if(arr.length >=3){
+        //         var line1 = arr[0];
+        //         var line2 = [];
+        //         var line3 = arr[arr.length-1];
+        //         var line4 = []
+        //         arr.forEach(function(ele,index){
+        //         line4.push(ele[0]);
+        //         line2.push(ele[ele.length-1]);   
+        //         })
+        //         line1.splice(arr.length-1,1)
+        //         line2.splice(arr.length-1,1);
+        //         line3.splice(0,1)
+        //         line4.splice(arr.length-1,1);
+        //         line3.reverse();
+        //         line4.reverse();         
+        //         arr.splice(0,1);
+        //         arr.splice(arr.length-1,1);
+
+        //         arr.forEach(function(ele){
+        //               ele.splice(0,1);
+        //              ele.splice(ele.length-1,1)
+        //         })
+        //         var x = demo(arr);
+        //         var myArr = [...line1,...line2,...line3,...line4,...x];
+        //         return myArr;
+        //     }else{
+        //         if(arr.length ==0){
+        //             return ;
+        //         }
+        //         if(arr.length == 1){
+        //             return arr;
+        //         }
+        //         if(arr.length == 2){
+        //             var arr = [...arr[0],...arr[1].reverse()];
+        //             return arr;
+        //         }
+        //     }         
+        // }
+
+        // demo([
+        //     [1,2,3,4],
+        //     [5,6,7,8],
+        //     [9,10,11,12],
+        //     [13,14,15,16],
+        // ])
+
+
+        // function demo(str){
+        //     var len = 0;
+        //     for(var i = 0;i<str.length;i++){
+        //         len += str[i].charCodeAt()
+        //     }
+        //     if(len)
+        // }
+
+        // demo('Hello World!')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // function myDate(str){
+        //     var arr  = str.split(' ');
+        //     var year = parseInt(arr[0]);
+        //     var month =parseInt(arr[1]) ;
+        //     var day = parseInt(arr[2]);
+        //     if((year % 4 ==0 && year % 100 !=0) || (year % 400 ==0 && year< 3200) ||(year % 3200==0 && year % 172800 ==0) ){
+        //          var date = new Date(year,month,0);
+        //          var curday = date.getDate();
+        //          if(day > curday){
+        //             var number = day - curday;
+        //             month++;
+        //             if(number < 10){
+        //                 number ="0"+number;
+        //             }
+        //             if(month < 10){
+        //                 month = "0"  + month;
+        //             }
+        //             return year +"-"+month+"-"+number;
+        //          }else{
+        //             if(number < 10){
+        //                 number ="0"+number;
+        //             }
+        //             if(month < 10){
+        //                 month = "0"  + month;
+        //             }
+        //              return year +"-"+month+"-"+day;
+        //          }
+        //     }else{
+        //         var date = new Date(year,month,0);
+        //         var curday = date.getDate();
+        //         if(year >= 3200){
+        //                 if(month == 2){
+        //                    curday = 28;
+        //              }
+        //          }
+        //          console.log(curday);
+        //         if(day > curday){
+        //             var number = day - curday;
+        //             month++;
+        //             if(number < 10){
+        //                 number ="0"+number;
+        //             }
+        //             if(month < 10){
+        //                 month = "0"  + month;
+        //             }
+
+        //             return year +"-"+month+"-"+number;
+        //          }else{
+        //             if(number < 10){
+        //                 number ="0"+number;
+        //             }
+        //             if(month < 10){
+        //                 month = "0"  + month;
+        //             }
+        //              return year +"-"+month+"-"+day;
+        //          }
+        //     }
+        // }
+
+
+        //   myDate("2004 2 29");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //     function solution(longstring, alphabet) {
+        //         //代码写在这里
+        //         var len = alphabet.length;
+        //         longstring = longstring.split('');
+        //         var obj = {};
+        //         for (var i = 0; i < alphabet.length; i++) {
+        //              if(!obj[alphabet[i]]){
+        //                 obj[alphabet[i]] = 0;
+        //              }
+        //         }
+        //         var curobj = {
+        //             ...obj,
+        //         }
+        //         var index = 0;
+        //         function getsolu(len) {
+        //              let myarr = [];
+        //              for (var i = 0; i < longstring.length; i++) {
+        //                 if (i + len <= longstring.length) {
+        //                      var arr = longstring.slice(i, i + len);
+        //                        arr.forEach(function (ele) {
+        //                            if (obj[ele]!= undefined) {
+        //                                obj[ele]++;
+        //                             }
+        //                         })
+        //                         for(var prop in obj){
+        //                             if(obj[prop] > 0){
+        //                                 index++;
+        //                             }
+        //                         }
+        //                         console.log(index);
+        //                         if(index == 3){
+        //                             return arr;
+        //                         }else{
+        //                             index = 0;
+        //                         for(var prop in obj){
+        //                              obj[prop] = 0;
+        //                         }
+
+        //                        }              
+        //                     }else{
+        //                         len = len +1;
+        //                         myarr = getsolu(len);
+        //                     }
+        //              }
+        //              return myarr;
+        //        }
+        //        var nowArr = getsolu(len);
+        //        console.log(nowArr);
+        // }
+        // solution("eeaaccebce", "abc") 
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="demo">
+        你好,{{name}},{{age}}<br>
+        <span>{{age}}</span>
+        <span>住址:{{where}}</span><br>
+         {{obj.x}}
+         <!-- {{dd}} -->
+    </div>
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+    <script  type="module">
+        // 模块里的东西都是局部变量
+        // 用window.test变为全局变量
+        import Due from './core/index.js'
+         
+        window.test = new Due({
+                        el:'demo',
+                        data:{
+                            name:'hwt',
+                            age:24,
+                            where:"China",
+                            obj:{
+                                x:1,
+                                y:2,
+                            },
+                            arr:[
+                                {name:'hwt'},
+                                {name:'wthe'},
+                            ]
+                        }
+                     })
+        // window.test.name = 'sssssssssssss'
+    </script>
+   
+</body>
+</html>
